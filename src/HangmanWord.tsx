@@ -21,6 +21,7 @@ export default function HangmanDrawing() {
         display: 'flex',
         padding: '.5em',
         gap: '.25em',
+        lineHeight: '5rem',
         fontSize: '5rem',
         fontWeight: 'bold',
         textTransform: 'uppercase'

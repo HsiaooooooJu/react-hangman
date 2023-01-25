@@ -1,4 +1,3 @@
-import './App.css'
 import { useState } from 'react'
 import words from './wordList.json'
 import HangmanDrawing from './HangmanDrawing'
@@ -20,8 +19,9 @@ export default function App() {
         display: 'flex',
         flexDirection: 'column',
         gap: '2rem',
-        margin: '0 auto',
-        alignItems: 'center'
+        margin: '2rem auto',
+        alignItems: 'center',
+        fontFamily: 'Baloo Tamma 2'
       }}
     >
       <div
@@ -34,7 +34,9 @@ export default function App() {
       </div>
       <HangmanDrawing />
       <HangmanWord />
-      <Keyboard />
+      <div style={{ alignSelf: 'stretch' }}>
+        <Keyboard />
+      </div>
     </div>
   )
 }
