@@ -1,14 +1,23 @@
-export default function HangmanDrawing() {
-  const word = 'test'
-  const guessLetters = ['t', 'e', 'a']
+type HangmanWordProps = {
+  wordToGuess: string
+  guessedLetters: string[]
+}
 
+export default function HangmanWord({ wordToGuess, guessedLetters }: HangmanWordProps) {
   // index is unique in this case, cuz the spelling of the word will never change
   // which means that the order of the letter (index number) will never change
-  const letters = word.split('').map((letter: string, index: number) => {
+  const letters = wordToGuess.split('').map((letter: string, index: number) => {
     return (
-      <span style={{ borderBottom: '.1em solid black' }} key={index}>
+      <span
+        style={{
+          width: '4rem',
+          textAlign: 'center',
+          borderBottom: '.1em solid black'
+        }}
+        key={index}
+      >
         <span
-          style={{ visibility: guessLetters.includes(letter) ? 'visible' : 'hidden' }}
+          style={{ visibility: guessedLetters.includes(letter) ? 'visible' : 'hidden' }}
         >
           {letter}
         </span>
