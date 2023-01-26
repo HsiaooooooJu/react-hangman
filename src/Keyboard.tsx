@@ -1,8 +1,19 @@
 import styles from './Keyboard.module.css'
 
-const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 65))
+const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97))
 
-export default function Keyboard() {
+type KeyboardProps = {
+  activeLetters: string[]
+  inactiveLetters: string[]
+  // function that takes in a letter string and return nothing
+  addGuessedLetter: (letter: string) => void
+}
+
+export default function Keyboard({
+  activeLetters,
+  inactiveLetters,
+  addGuessedLetter
+}: KeyboardProps) {
   return (
     <div
       style={{
@@ -11,9 +22,21 @@ export default function Keyboard() {
         gap: '.6rem'
       }}
     >
-      {alphabet.map((key: string) => {
+      {alphabet.map((key) => {
+        const isActive = activeLetters.includes(key)
+        const isInactive = inactiveLetters.includes(key)
         return (
-          <button className={`${styles.btn}`} type="button" key={key}>
+          <button
+            onClick={() => addGuessedLetter(key)}
+            className={`
+              ${styles.btn} 
+              ${isActive ? styles.active : ''} 
+              ${isInactive ? styles.inactive : ''}
+            `}
+            disabled={isActive || isInactive}
+            type="button"
+            key={key}
+          >
             {key}
           </button>
         )
