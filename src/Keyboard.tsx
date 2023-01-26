@@ -3,6 +3,7 @@ import styles from './Keyboard.module.css'
 const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97))
 
 type KeyboardProps = {
+  disabled: boolean
   activeLetters: string[]
   inactiveLetters: string[]
   // function that takes in a letter string and return nothing
@@ -12,7 +13,8 @@ type KeyboardProps = {
 export default function Keyboard({
   activeLetters,
   inactiveLetters,
-  addGuessedLetter
+  addGuessedLetter,
+  disabled = false
 }: KeyboardProps) {
   return (
     <div
@@ -33,7 +35,7 @@ export default function Keyboard({
               ${isActive ? styles.active : ''} 
               ${isInactive ? styles.inactive : ''}
             `}
-            disabled={isActive || isInactive}
+            disabled={isActive || isInactive || disabled}
             type="button"
             key={key}
           >
