@@ -1,15 +1,17 @@
-import { useCallback, useEffect, useState, useMemo } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import words from './wordList.json'
 import HangmanDrawing from './HangmanDrawing'
 import HangmanWord from './HangmanWord'
 import Keyboard from './Keyboard'
 
+function getWord() {
+  // Math.random(): return 0 <= random number < 1
+  // Math.floor(Math.random() * 5); // random number from 0 to 4
+  return words[Math.floor(Math.random() * words.length)]
+}
+
 export default function App() {
-  const wordToGuess = useMemo(() => {
-    // Math.random(): return 0 <= random number < 1
-    // Math.floor(Math.random() * 5); // random number from 0 to 4
-    return words[Math.floor(Math.random() * words.length)]
-  }, [])
+  const [wordToGuess, setWordToGuess] = useState(getWord)
 
   // the state will be an array of string, string length will be 1
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
@@ -48,6 +50,21 @@ export default function App() {
     }
   }, [addGuessedLetter])
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const { key } = e
+      if (key !== 'Enter') return
+
+      e.preventDefault()
+      setGuessedLetters([])
+      setWordToGuess(getWord())
+    }
+    document.addEventListener('keypress', handler)
+    return () => {
+      document.removeEventListener('keypress', handler)
+    }
+  }, [])
+
   return (
     <div
       style={{
@@ -66,11 +83,15 @@ export default function App() {
           textAlign: 'center'
         }}
       >
-        {isLoser && 'Nice try! Refresh to play again! 💪🏻'}
-        {isWinner && 'Good job! Refresh to play again! 😎'}
+        {isLoser && 'Nice try! Press Enter to play again! 💪🏻'}
+        {isWinner && 'Good job! Press Enter to play again! 😎'}
       </div>
       <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
-      <HangmanWord guessedLetters={guessedLetters} wordToGuess={wordToGuess} />
+      <HangmanWord
+        reveal={isLoser}
+        guessedLetters={guessedLetters}
+        wordToGuess={wordToGuess}
+      />
       <div style={{ alignSelf: 'stretch' }}>
         <Keyboard
           disabled={isLoser || isWinner}
