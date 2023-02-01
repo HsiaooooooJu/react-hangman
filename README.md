@@ -29,12 +29,7 @@ npm run dev
 #### Execute successfully if seeing following message
 
 ```
-Compiled successfully!
-
-You can now view parkit in the browser.
-
 Local:http://localhost:3000/react-hangman
-
 ```
 
 Source from [WebDevSimplified Youtube](https://www.youtube.com/watch?v=-ONUyenGnWw)
